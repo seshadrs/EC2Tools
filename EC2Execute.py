@@ -23,7 +23,7 @@ class EC2Execute:
 		self.KEY = pemfile
 
 	def execute(self, command):
-		"""executes shell command and returns result, a list of sentences"""
+		"""executes shell command and returns result as a string"""
 
 		ssh = None
 		if self.KEY:
@@ -41,12 +41,12 @@ class EC2Execute:
 		if result == []:
 		    error = ssh.stderr.readlines()
 		    print >> sys.stderr, "ERROR: %s" % error
-		return result
+		return ''.join(result)
 
 	def executeMulti(self, commands):
 		""" executes multiple commands. 
 		takes as input a list of commands to execute
-		returns the nested-list of the results """
+		returns the nested-list of the result string """
 
 		results=[]
 		ssh = None
@@ -61,7 +61,7 @@ class EC2Execute:
 
 if __name__ == "__main__":
 	
-	m1 = EC2Execute("user_name","host_public_DNS")
+	m1 = EC2Execute("ubuntu","ec2-184-73-66-207.compute-1.amazonaws.com")
 	print m1.execute("ls")
 	print m1.executeMulti(["ls","pwd"])
 
