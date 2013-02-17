@@ -10,7 +10,7 @@ import subprocess
 import sys
  
 
-class EC2Execute:
+class EC2Instance:
 	""" 
 	lets you ssh to an EC2 instance using subprocess, execute a command, return result.
 	"""
@@ -56,6 +56,19 @@ class EC2Execute:
 			results.append(result)
 
 		return results
+
+	
+	def processorType(self):
+		"""
+		returns a list containing the instance's processor type and the cpuinfo file content
+		"""
+		cpuinfo = self.execute("cat /proc/cpuinfo")
+		lines = cpuinfo.split('\n')
+		for l in lines:
+			if l[:10]=="model name":
+				return [l.split(':')[1].strip(), cpuinfo]
+		return [None,cpuinfo]
+
 
 
 
