@@ -2,7 +2,7 @@
 Author : Seshadri Sridharan
 
 Feb 17 >> Lets you ssh to an EC2 instance using subprocess, execute a command, return result. 
-  	- no interactivity yet
+		- no interactivity yet
 		- inefficient. subprocess, ssh connection established for every command execution
 
 """
@@ -52,22 +52,7 @@ class EC2Execute:
 		ssh = None
 
 		for command in commands:
-			if self.KEY:
-				ssh = subprocess.Popen(["ssh",  "-i "+ self.KEY, self.UNAME+"@"+self.HOST, command],
-		                       shell=False,
-		                       stdout=subprocess.PIPE,
-		                       stderr=subprocess.PIPE)
-			else:
-				ssh = subprocess.Popen(["ssh", self.UNAME+"@"+self.HOST, command],
-		                       shell=False,
-		                       stdout=subprocess.PIPE,
-		                       stderr=subprocess.PIPE)
-
-			result = ssh.stdout.readlines()
-			if result == []:
-			    error = ssh.stderr.readlines()
-			    print >> sys.stderr, "ERROR: %s" % error
-
+			result = self.execute(command)
 			results.append(result)
 
 		return results
