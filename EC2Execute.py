@@ -61,7 +61,7 @@ class EC2Execute:
 
 if __name__ == "__main__":
 	
-	m1 = EC2Execute("ubuntu","ec2-184-73-66-207.compute-1.amazonaws.com")
+	m1 = EC2Execute("user_name","host_public_DNS")
 	print m1.execute("ls")
 	print m1.executeMulti(["ls","pwd"])
 
